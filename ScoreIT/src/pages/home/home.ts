@@ -11,9 +11,13 @@ export class HomePage {
   username = '';
   email = '';
   constructor(private nav: NavController, private auth: AuthService) {
-    let info = this.auth.getUserInfo();
-    this.username = info['name'];
-    this.email = info['email'];
+    // let info = this.auth.getUserInfo();
+    // this.username = info['name'];
+    // this.email = info['email'];
+  }
+
+  public createTournament() {
+    this.nav.push('CreateTournamentPage');
   }
 
   public logout() {
