@@ -13,7 +13,6 @@ def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
 
 class ScoreITViewSet (ModelViewSet):
-    print("hellloo")
 
     # @list_route(methods=['GET'])
     # def check_campaign(self, request, *args, **kwargs):
@@ -23,21 +22,28 @@ class ScoreITViewSet (ModelViewSet):
     #insert scoreIT_team table
     @list_route(methods=['POST'])
     def insert_team_table(self, request, *args, **kwargs):
-            team = Team(Tournament_Name=request.data.get("tournament_name"), Team_A_Name=request.data.get("team_a_name"),
-                        Team_B_Name=request.data.get("team_b_name"))
+            team = Team(Email= request.data.get("email"), Tournament_Name=request.data.get("tournament_name"), Team_A_Name=request.data.get("team_a_name"),
+                        Team_B_Name=request.data.get("team_b_name"), Tournament_Type=request.data.get("tournament_type"))
             team.save()
+            return Response("Saved successfully")
 
 
     #Retrive from  scoreIT_team table
     @list_route(methods=['POST'])
     def retrieve_team_table(self, request, *args, **kwargs):
-        team = Team.objects.get(Tournament_Name=request.data.get("tournament_name"))
-        print(str(team))
-        return Response({
-            'Tournament_Name' : team.Tournament_Name,
-            'Team_A_Name' : team.Team_A_Name,
-            'Team_B_Name': team.Team_B_Name
-        })
+        tournamentList = []
+        team = Team.objects.filter(Email=request.data.get("email"))
+        #team = Team.objects.all()
+        for t in team:
+            print(t.Tournament_Name)
+            print(t.Team_B_Name)
+            print(t.Team_A_Name)
+            tournamentList.append({"Tournament_Name":t.Tournament_Name, "Team_A_Name": t.Team_A_Name, "Team_B_Name": t.Team_B_Name})
+
+        print(tournamentList)
+        if not team:
+            return Response({"No Tournaments Present"}, status=400)
+        return Response(tournamentList)
 
 
 
@@ -46,7 +52,7 @@ class ScoreITViewSet (ModelViewSet):
 
     # insert scoreIT_tournament_status table
     @list_route(methods=['POST'])
-    def register_user(self, request, *args, **kwargs):
+    def register_tournament(self, request, *args, **kwargs):
         tournament_status = Tournament_Status.objects.filter(Email=request.data.get("email"))
         if not tournament_status:
             tournament_status = Tournament_Status(Email=request.data.get("email"), Tournament_Name=request.data.get("Tournament_Name"),
@@ -94,7 +100,11 @@ class ScoreITViewSet (ModelViewSet):
         if not user:
             return Response({"Invalid Username and Password"}, status=400)
         else:
-            return Response({"Success"}, status=200)
+            user = User.objects.get(Email=request.data.get("email"), Password=request.data.get("password"))
+            return Response({
+                'Name': user.Fname + " " + user.Lname,
+                'Email': user.Email
+            })
 
     # Insert from scoreIT_tournament table
     @list_route(methods=['POST'])

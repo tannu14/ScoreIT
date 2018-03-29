@@ -21,6 +21,7 @@ export class LoginPage {
     this.showLoading()
     this.auth.login(this.registerCredentials).subscribe(allowed => {
       if (allowed) {
+        console.log("allowed")
         this.nav.setRoot('HomePage');
       } else {
         this.showError("Access Denied");

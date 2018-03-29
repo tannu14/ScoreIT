@@ -12,9 +12,11 @@ class User(models.Model):
     Password = models.CharField(max_length=30)
 
 class Team(models.Model):
-    Tournament_Name = models.CharField(max_length=30, primary_key=True)
+    Email = models.CharField(max_length=30,default='')
+    Tournament_Name = models.CharField(max_length=30)
     Team_A_Name = models.CharField(max_length=30)
     Team_B_Name = models.CharField(max_length=30)
+    Tournament_Type = models.CharField(max_length=30,default='singles')
 
 class Tournament(models.Model):
     Email = models.CharField(max_length=200, primary_key=True)
