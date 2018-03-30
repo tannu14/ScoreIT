@@ -25,6 +25,14 @@ class ScoreITViewSet (ModelViewSet):
             team = Team(Email= request.data.get("email"), Tournament_Name=request.data.get("tournament_name"), Team_A_Name=request.data.get("team_a_name"),
                         Team_B_Name=request.data.get("team_b_name"), Tournament_Type=request.data.get("tournament_type"))
             team.save()
+
+            # insert into role table
+            tournament = Tournament.objects.filter(Email=request.data.get("tournament_name"))
+            if not tournament:
+                tournament = Tournament(Email=request.data.get("email"),
+                                        Tournament_Name=request.data.get("tournament_name"),
+                                        Role="admin")
+                tournament.save()
             return Response("Saved successfully")
 
 
@@ -45,9 +53,19 @@ class ScoreITViewSet (ModelViewSet):
             return Response({"No Tournaments Present"}, status=400)
         return Response(tournamentList)
 
+    @list_route(methods=['POST'])
+    def retrieve_tournaments(self, request, *args, **kwargs):
+        tournamentList = []
+        tournaments = Tournament.objects.filter(Email=request.data.get("email"))
+        #team = Team.objects.all()
+        for t in tournaments:
+            print(t.Tournament_Name)
+            tournamentList.append(t.Tournament_Name)
 
-
-
+        print(tournamentList)
+        if not tournaments:
+            return Response({"No Tournaments Present"}, status=400)
+        return Response(tournamentList)
 
 
     # insert scoreIT_tournament_status table
@@ -67,7 +85,7 @@ class ScoreITViewSet (ModelViewSet):
 
     # Retrive from  sscoreIT_tournament_status table
     @list_route(methods=['POST'])
-    def retrieve_tournament_role(self, request, *args, **kwargs):
+    def retrieve_tournament(self, request, *args, **kwargs):
         tournament_status = Tournament_Status.objects.get(Email=request.data.get("email"))
         print(str(tournament_status))
         return Response({

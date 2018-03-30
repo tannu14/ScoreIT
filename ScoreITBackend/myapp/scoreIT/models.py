@@ -19,13 +19,13 @@ class Team(models.Model):
     Tournament_Type = models.CharField(max_length=30,default='singles')
 
 class Tournament(models.Model):
-    Email = models.CharField(max_length=200, primary_key=True)
+    Email = models.CharField(max_length=200)
     Tournament_Name = models.CharField(max_length=200)
     Role = models.CharField(max_length=200)
 
 
 class Tournament_Status(models.Model):
-    Email = models.CharField(max_length=200, primary_key=True)
+    Email = models.CharField(max_length=200)
     Tournament_Name = models.CharField(max_length=200)
     Team_A_Name = models.CharField(max_length=200)
     Team_B_Name = models.CharField(max_length=200)
