@@ -15,7 +15,7 @@ import { HttpClient} from '@angular/common/http';
   templateUrl: 'insert-scores.html',
 })
 export class InsertScoresPage {
-  tournaments = []
+  tournaments: any
   isTournamentScorePresent: any
   name = '';
   email = '';
