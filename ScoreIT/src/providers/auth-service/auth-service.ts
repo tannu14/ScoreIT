@@ -65,7 +65,7 @@ export class AuthService {
       {
         headers: { 'Content-Type': 'application/json' }
       }).subscribe(data => {
-          alert(data)
+          // alert(data)
         },err=> {
         console.log('Message: ' + err.message);
         console.log('Status: ' + err.status);

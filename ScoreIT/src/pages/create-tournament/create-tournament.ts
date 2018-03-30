@@ -22,6 +22,7 @@ export class CreateTournamentPage {
   tournamentData = { teamA: '', teamB: '' , tournamentName: '', tournamentType:''};
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, public http: HttpClient) {
+    console.log(this.email)
     this.email = navParams.get('email')
     this.name = navParams.get('name')
   }
@@ -44,7 +45,7 @@ export class CreateTournamentPage {
     {
       headers: { 'Content-Type': 'application/json' }
     }).subscribe(data => {
-        alert(data)
+        // alert(data)
         this.loading.dismiss()
       },err=> {
       console.log('Message: ' + err.message);

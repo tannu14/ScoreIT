@@ -8,17 +8,25 @@ import { AuthService } from '../../providers/auth-service/auth-service';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  username = '';
+  name = '';
   email = '';
   constructor(private nav: NavController, private auth: AuthService) {
     let info = this.auth.getUserInfo();
-    this.username = info['name'];
+    this.name = info['name'];
     this.email = info['email'];
+    console.log(this.email)
   }
 
   public createTournament() {
     this.nav.push('CreateTournamentPage', {
-    username: this.username,
+    name: this.name,
+    email: this.email
+    });
+  }
+
+  public enterScores() {
+    this.nav.push('InsertScoresPage', {
+    name: this.name,
     email: this.email
     });
   }

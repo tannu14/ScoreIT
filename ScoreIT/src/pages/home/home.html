@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar color="dark">
     <ion-title>
-      ScoreIT... Welcome, {{username}}!
+      ScoreIT... Welcome, {{name}}!
     </ion-title>
     <ion-buttons end>
       <button ion-button (click)="logout()">
@@ -22,7 +22,7 @@
   <button ion-button full color="dark" (click)="createTournament()">
     Create Tournament
   </button>
-  <button ion-button full color="dark">
-      View Tournament
+  <button ion-button full color="dark" (click)="enterScores()">
+      Enter Scores
   </button>
 </ion-content>

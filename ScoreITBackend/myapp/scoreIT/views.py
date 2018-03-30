@@ -27,7 +27,7 @@ class ScoreITViewSet (ModelViewSet):
             team.save()
 
             # insert into role table
-            tournament = Tournament.objects.filter(Email=request.data.get("tournament_name"))
+            tournament = Tournament.objects.filter(Tournament_Name=request.data.get("tournament_name"))
             if not tournament:
                 tournament = Tournament(Email=request.data.get("email"),
                                         Tournament_Name=request.data.get("tournament_name"),
@@ -70,24 +70,43 @@ class ScoreITViewSet (ModelViewSet):
 
     # insert scoreIT_tournament_status table
     @list_route(methods=['POST'])
-    def register_tournament(self, request, *args, **kwargs):
-        tournament_status = Tournament_Status.objects.filter(Email=request.data.get("email"))
+    def insert_tournament_scores(self, request, *args, **kwargs):
+        tournament_status = Tournament_Status.objects.get(Email=request.data.get("email"), Tournament_Name=request.data.get("tournament_name"))
+        print("Abhishek")
         if not tournament_status:
-            tournament_status = Tournament_Status(Email=request.data.get("email"), Tournament_Name=request.data.get("Tournament_Name"),
+            print("Abhishek if")
+            tournament_status = Tournament_Status(Email=request.data.get("email"), Tournament_Name=request.data.get("tournament_name"),
                                                   Team_A_Name=request.data.get("Team_A_Name"), Team_B_Name=request.data.get("Team_B_Name"),
                                                   Team_A_Score=request.data.get("Team_A_Score"), Team_B_Score=request.data.get("Team_B_Score"),
-                                                  Tournament_Status=request.data.get("Tournament_Status"), Matches_Played=request.data.get("Matches_Played"), Date=request.data.get("Date"))
+                                                  Tournament_Status=request.data.get("Tournament_Status"), Matches_Played=request.data.get("Matches_Played"),
+                                                  Date=request.data.get("Date"))
             tournament_status.save()
         else:
-            print("User is already present in db")
-        return Response("Hello, Register user")
+            print("Abhishek else")
+            tournament_status = Tournament_Status.objects.get(Email=request.data.get("email"), Tournament_Name=request.data.get("tournament_name"))
+            tournament_status.Email = request.data.get("email")
+            tournament_status.Tournament_Name = request.data.get("tournament_name")
+            tournament_status.Team_A_Name = request.data.get("Team_A_Name")
+            tournament_status.Team_B_Name = request.data.get("Team_B_Name")
+            tournament_status.Team_A_Score = request.data.get("Team_A_Score")
+            tournament_status.Team_B_Score = request.data.get("Team_B_Score")
+            tournament_status.Tournament_Status = request.data.get("Tournament_Status")
+            tournament_status.Matches_Played = request.data.get("Matches_Played")
+            tournament_status.Date = request.data.get("Date")
+
+            tournament_status.save()
+        return Response("Successfully inserted Scores")
 
 
     # Retrive from  sscoreIT_tournament_status table
     @list_route(methods=['POST'])
-    def retrieve_tournament(self, request, *args, **kwargs):
-        tournament_status = Tournament_Status.objects.get(Email=request.data.get("email"))
-        print(str(tournament_status))
+    def retrieve_tournament_scores(self, request, *args, **kwargs):
+        tournament_status = Tournament_Status.objects.filter(Email=request.data.get("email"), Tournament_Name=request.data.get("tournament_name"))
+        if not tournament_status:
+            return Response({"No Tournament Scores Present"}, status=400)
+        else:
+            tournament_status = Tournament_Status.objects.get(Email=request.data.get("email"),
+                                                                 Tournament_Name=request.data.get("tournament_name"))
         return Response({
             'Tournament_Name' : tournament_status.Tournament_Name,
             'Team_A_Name' : tournament_status.Team_A_Name,
