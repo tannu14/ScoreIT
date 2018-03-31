@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-title>
+      ScoreIT... Welcome, {{name}}!
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content text-center class="home" padding>
+  <ion-row class="logo-row">
+    <ion-col></ion-col>
+    <ion-col width-67>
+      <img src="http://placehold.it/300x200"/>
+    </ion-col>
+    <ion-col></ion-col>
+  </ion-row>
+  <button ion-button full color="dark" (click)="createTournament()">
+    Create Tournament
+  </button>
+  <button ion-button full color="dark" (click)="enterScores()">
+      Enter Scores
+  </button>
+</ion-content>

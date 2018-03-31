@@ -6,14 +6,21 @@
 -->
 <ion-header>
 
-  <ion-navbar color="dark">
-    <ion-title>Insert Scores</ion-title>
+  <ion-navbar color="twitter">
+    <ion-title>Insert Scores...Hi, {{name}}!</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content class="insertScores" padding>
+  <ion-row class="logo-row">
+    <ion-col></ion-col>
+    <ion-col width-67>
+      <img src="assets/imgs/istock_all_sports_images.jpg"/>
+    </ion-col>
+    <ion-col></ion-col>
+  </ion-row>
   <ion-item>
       <ion-label>Tournament(s)</ion-label>
       <ion-select [(ngModel)]="selectedTournament" (ngModelChange)="populateTeam(selectedTournament)">
@@ -21,42 +28,29 @@
       </ion-select>
     </ion-item>
 
-    <div class="login-box" *ngIf="isTournamentScorePresent">
-      <form  #registerForm="ngForm">
-        <ion-row>
-          <ion-col>
-            <ion-list inset>
+    <ion-item *ngIf="isTournamentScorePresent">
+      <ion-label>TeamA</ion-label>
+    <ion-select [(ngModel)]="selectedTeamA" (ngModelChange)="populateTeamB(selectedTeamA)">
+      <ion-option *ngFor="let teamA of teamsPerTournamentObj" [value] = "teamA.Team_A_Name">{{teamA.Team_A_Name}}</ion-option>
+    </ion-select>
+  </ion-item>
 
-              <ion-item>
-                <ion-input type="text" placeholder="Tournament Name" name="tournamentName" [(ngModel)]="tournamentData.tournamentName" required></ion-input>
-              </ion-item>
+  <ion-item *ngIf="isTournamentScorePresent && isTeamBPresent">
+    <ion-label>TeamB</ion-label>
+    <ion-select  [(ngModel)]="selectedTeamB" (ngModelChange)="populateTeamWinnerList(selectedTeamB)">
+      <ion-option *ngFor="let teamB of teamBList" [value] = "teamB.Team_B_Name">{{teamB.Team_B_Name}}</ion-option>
+    </ion-select>
+  </ion-item>
 
-              <ion-item>
-                <ion-input type="text" placeholder="TeamA" name="teamA" [(ngModel)]="tournamentData.teamA" required></ion-input>
-              </ion-item>
+  <ion-item *ngIf="isTournamentScorePresent && isTeamBPresent && winnersList">
+    <ion-label>Select Winners</ion-label>
+    <ion-select  [(ngModel)]="winner" (ngModelChange)="register(winner)">
+      <ion-option *ngFor="let team of teams" [value] = "team">{{team}}</ion-option>
+    </ion-select>
+  </ion-item>
 
-              <ion-item>
-                <ion-input type="text" placeholder="TeamB" name="teamB" [(ngModel)]="tournamentData.teamB" required></ion-input>
-              </ion-item>
+    <button *ngIf="isTournamentScorePresent && isTeamBPresent && winnersList" ion-button class="submit-btn" full type="submit" (click)="submitWinner()">Submit Scores</button>
 
-              <ion-item>
-                 <ion-select [(ngModel)]="tournamentData.tournamentType" name="tournamentType" >
-                   <ion-option value="single">Single</ion-option>
-                   <ion-option value="multiplayer">Multiplayer</ion-option>
-                 </ion-select>
-              </ion-item>
 
-            </ion-list>
-          </ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col class="signup-col">
-            <button ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">Create New Tournament</button>
-          </ion-col>
-        </ion-row>
-
-      </form>
-    </div>
 
 </ion-content>

@@ -1,7 +1,7 @@
 <ion-header>
-  <ion-navbar color="dark">
+  <ion-navbar color="twitter">
     <ion-title>
-      ScoreIT... Welcome, {{name}}!
+      SCORE-IT !!  ... Hi, {{name}}!
     </ion-title>
     <ion-buttons end>
       <button ion-button (click)="logout()">
@@ -15,14 +15,17 @@
   <ion-row class="logo-row">
     <ion-col></ion-col>
     <ion-col width-67>
-      <img src="http://placehold.it/300x200"/>
+      <img src="assets/imgs/istock_all_sports_images.jpg"/>
     </ion-col>
     <ion-col></ion-col>
   </ion-row>
-  <button ion-button full color="dark" (click)="createTournament()">
+  <button ion-button full color="twitter" (click)="createTournament()">
     Create Tournament
   </button>
-  <button ion-button full color="dark" (click)="enterScores()">
+  <button ion-button full color="twitter" (click)="enterScores()">
       Enter Scores
+  </button>
+  <button ion-button full color="twitter" (click)="viewScores()">
+      View Scores
   </button>
 </ion-content>

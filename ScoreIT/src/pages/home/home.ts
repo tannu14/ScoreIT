@@ -31,6 +31,13 @@ export class HomePage {
     });
   }
 
+  public viewScores() {
+    this.nav.push('ViewScoresPage', {
+    name: this.name,
+    email: this.email
+    });
+  }
+
   public logout() {
     this.auth.logout().subscribe(succ => {
       this.nav.setRoot('LoginPage')
