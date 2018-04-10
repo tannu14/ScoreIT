@@ -1,5 +1,5 @@
-page-insert-scores {
-  .insertScores {
+page-view-scores {
+  .viewScores {
     // background: linear-gradient(to bottom right, #151515, #060606);
 
     H1 {
@@ -41,5 +41,29 @@ page-insert-scores {
        border-radius: 10px !important;
        background: #024537;
      }
+     #scoreTable {
+         font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+         border-collapse: collapse;
+         width: 100%;
+         border-radius: 10px !important;
+     }
+
+     #scoreTable td, #scoreTable th {
+         border: 1px solid #ddd;
+         padding: 8px;
+     }
+
+     #scoreTable tr:nth-child(even){background-color: #f2f2f2;}
+
+     #scoreTable tr:hover {background-color: #ddd;}
+
+     #scoreTable th {
+         padding-top: 12px;
+         padding-bottom: 12px;
+         text-align: left;
+         background-color: #2A786D;
+         color: white;
+     }
   }
+
 }

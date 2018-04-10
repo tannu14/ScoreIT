@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController} from 'ionic-angular';
-import { ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams} from 'ionic-angular';
+// import { ToastController } from 'ionic-angular';
 import { HttpClient} from '@angular/common/http';
 
 /**
@@ -18,10 +18,11 @@ import { HttpClient} from '@angular/common/http';
 export class CreateTournamentPage {
   email = ''
   name = ''
-  loading: any; 
+  loading: any
+
   tournamentData = { teamA: '', teamB: '' , tournamentName: '', tournamentType:''};
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, public http: HttpClient) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpClient) {
     console.log(this.email)
     this.email = navParams.get('email')
     this.name = navParams.get('name')
@@ -32,7 +33,6 @@ export class CreateTournamentPage {
   }
 
   public createTournament() {
-    //let loader = this.showLoading()
     //console.log(this.tournamentData.tournamentName);
     this.http.post('http://localhost:8000/scoreIT/api/insert_team_table/',
     {
@@ -45,36 +45,37 @@ export class CreateTournamentPage {
     {
       headers: { 'Content-Type': 'application/json' }
     }).subscribe(data => {
-        // alert(data)
-        this.loading.dismiss()
+      alert(data)
+      this.navCtrl.push('HomePage', {
+      name: this.name,
+      email: this.email
+      });
       },err=> {
       console.log('Message: ' + err.message);
       console.log('Status: ' + err.status);
-      this.loading.dismiss()
     });
-    this.presentToast()
+    //this.presentToast()
   }
 
-  presentToast() {
-    let toast = this.toastCtrl.create({
-      message: 'Tournament was created successfully ',
-      duration: 3000,
-      position: 'top'
-    });
+  // presentToast() {
+  //   let toast = this.toastCtrl.create({
+  //     message: 'Tournament was created successfully ',
+  //     duration: 3000,
+  //     position: 'top'
+  //   });
+  //
+  //   toast.onDidDismiss(() => {
+  //     console.log('Dismissed toast');
+  //   });
+  //   toast.present();
+  // }
 
-    toast.onDidDismiss(() => {
-      console.log('Dismissed toast');
-    });
-    toast.present();
-  }
-
-
-  showLoading() {
-    this.loading = this.loadingCtrl.create({
-      content: 'Please wait...',
-      dismissOnPageChange: true
-    });
-    this.loading.present();
-  }
+  // showLoading() {
+  //   this.loading = this.loadingCtrl.create({
+  //     content: 'Please wait...',
+  //     dismissOnPageChange: true
+  //   });
+  //   this.loading.present();
+  // }
 
 }

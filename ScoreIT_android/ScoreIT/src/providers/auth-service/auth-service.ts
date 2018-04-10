@@ -20,34 +20,34 @@ export class AuthService {
   }
 
   public login(credentials) {
-    if (credentials.email === null || credentials.password === null) {
-      return Observable.throw("Please insert credentials");
-    } else {
-      return Observable.create(observer => {
-        // At this point make a request to your backend to make a real check!
-        this.http.post('http://localhost:8000/scoreIT/api/login/',
-        {
-          email : credentials.email,
-          password: credentials.password
-        },
-        {
-          headers: { 'Content-Type': 'application/json' }
-        }).subscribe(data => {
-            console.log("Loggedin to true")
-            let username = data.Name
-            let email = data.Email
-            this.currentUser = new User(username, email);
-            observer.next(true);
-            observer.complete();
-          },err=> {
-          console.log('Message: ' + err.message);
-          console.log('Status: ' + err.status);
-          observer.next(false);
-          observer.complete();
-
-        });
-      });
-    }
+    // if (credentials.email === null || credentials.password === null) {
+    //   return Observable.throw("Please insert credentials");
+    // } else {
+    //   return Observable.create(observer => {
+    //     // At this point make a request to your backend to make a real check!
+    //     this.http.post('http://localhost:8000/scoreIT/api/login/',
+    //     {
+    //       email : credentials.email,
+    //       password: credentials.password
+    //     },
+    //     {
+    //       headers: { 'Content-Type': 'application/json' }
+    //     }).subscribe(data => {
+    //         console.log("Loggedin to true")
+    //         let username = data.Name
+    //         let email = data.Email
+    //         this.currentUser = new User(username, email);
+    //         observer.next(true);
+    //         observer.complete();
+    //       },err=> {
+    //       console.log('Message: ' + err.message);
+    //       console.log('Status: ' + err.status);
+    //       observer.next(false);
+    //       observer.complete();
+    //
+    //     });
+    //   });
+    // }
   }
 
   public register(credentials) {

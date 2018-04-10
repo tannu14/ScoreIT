@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage } from 'ionic-angular';
+import { NavController, NavParams, IonicPage } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service/auth-service';
 
 @IonicPage()
@@ -10,10 +10,10 @@ import { AuthService } from '../../providers/auth-service/auth-service';
 export class HomePage {
   name = '';
   email = '';
-  constructor(private nav: NavController, private auth: AuthService) {
-    let info = this.auth.getUserInfo();
-    this.name = info['name'];
-    this.email = info['email'];
+  constructor(private nav: NavController, public navParams: NavParams, private auth: AuthService) {
+    //let info = this.auth.getUserInfo();
+    this.name = navParams.get('name')
+    this.email = navParams.get('email')
     console.log(this.email)
   }
 
@@ -26,6 +26,13 @@ export class HomePage {
 
   public enterScores() {
     this.nav.push('InsertScoresPage', {
+    name: this.name,
+    email: this.email
+    });
+  }
+
+  public viewScores() {
+    this.nav.push('ViewScoresPage', {
     name: this.name,
     email: this.email
     });
